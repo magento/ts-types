@@ -10,7 +10,36 @@ or
 yarn add https://github.com/DaveMacaulay/types-magento2.git
 ```
 
-## Supported Magento Libraries
-- `mage/translate.js`
-- `uiClass`
-- `uiComponent`
+## Current Supported Magento Libraries
+- `mage/translate`: $t
+- `uiClass`: uiClass
+- `uiElement`: uiElement
+- `uiCollection`: uiCollection
+- `uiComponent`: uiComponent
+- `uiRegistry`: uiRegistry
+
+> If a library you desire isn't included yet please open an issue. Alternatively I welcome pull requests to this repository.
+
+## Usage
+You can import the moduels using the standard TypeScript `import` syntax:
+```js
+import * as $t from 'mage/translate';
+import * as uiClass from 'uiClass';
+import * as uiElement from 'uiElement';
+import * as uiCollection from 'uiCollection';
+import * as uiComponent from 'uiComponent';
+import * as uiRegistry from 'uiRegistry';
+```
+
+Then you're able to use the libraries as you would in normal JavaScript:
+```js
+// Translate
+$t('Translate this string');
+
+// Classes
+class MyComponent extends uiComponent {
+
+}
+```
+
+When TypeScript compiles the .ts files to JavaScript it will maintain the module name in the require dependencies. Resulting in the actual libraries being imported in the browser.
