@@ -61,9 +61,11 @@ interface MageUiClass {
 }
 
 interface MageUiClassDefaults {
-    ignoreTmpls: {
-        templates: boolean
-    }
+    ignoreTmpls: MageUiClassDefaultsIgnoreTmpls
+}
+
+interface MageUiClassDefaultsIgnoreTmpls {
+    templates: boolean
 }
 
 declare var uiClass: MageUiClass;
@@ -401,4 +403,138 @@ interface MageUiEvents {
 declare var uiEvents: MageUiEvents;
 declare module 'uiEvents' {
     export = uiEvents;
+}
+
+/**
+ * Support for uiCollection & uiComponent
+ */
+interface MageUiCollection extends MageUiElement {
+    defaults: MageUiCollectionDefaults;
+
+    /**
+     * Called when another element was added to current component.
+     *
+     * @param {Object} elem - Instance of an element that was added.
+     * @returns {MageUiCollection} Chainable.
+     */
+    initElement(elem: object): MageUiCollection;
+
+    /**
+     * Returns instance of a child found by provided index.
+     *
+     * @param {String} index - Index of a child.
+     * @returns {Object}
+     */
+    getChild(index: string): object;
+
+    /**
+     * Requests specified components to insert
+     * them into 'elems' array starting from provided position.
+     *
+     * @param {(String|Array)} elems - Name of the component to insert.
+     * @param {Number} [position=-1] - Position at which to insert elements.
+     * @returns {MageUiCollection} Chainable.
+     */
+    insertChild(elems: string | Array<any>, position: number): MageUiCollection;
+
+    /**
+     * Removes specified child from collection.
+     *
+     * @param {(Object|String)} elem - Child or index of a child to be removed.
+     * @param {Boolean} skipUpdate - skip collection update when element to be destroyed.
+     *
+     * @returns {MageUiCollection} Chainable.
+     */
+    removeChild(elem: object, skipUpdate: boolean): MageUiCollection;
+
+    /**
+     * Destroys collection children with its' elements.
+     */
+    destroyChildren(): void;
+
+    /**
+     * Clear data. Call method "clear"
+     * in child components
+     *
+     * @returns {MageUiCollection} Chainable.
+     */
+    clear(): MageUiCollection;
+
+    /**
+     * Checks if specified child exists in collection.
+     *
+     * @param {String} index - Index of a child.
+     * @returns {Boolean}
+     */
+    hasChild(index: string): boolean;
+
+    /**
+     * Creates 'async' wrapper for the specified child
+     * using uiRegistry 'async' method and caches it
+     * in a '_requested' components  object.
+     *
+     * @param {String} index - Index of a child.
+     * @returns {Function} Async module wrapper.
+     */
+    requestChild(index: string): Function;
+
+    /**
+     * Creates complete child name based on a provided index.
+     *
+     * @param {String} index - Index of a child.
+     * @returns {String}
+     */
+    formChildName(index: string): string;
+
+    /**
+     * Retrieves requested region.
+     * Creates region if it was not created yet
+     *
+     * @returns {*} @todo add depdency to KnockoutObservable
+     */
+    getRegion(name: string): any;
+
+    /**
+     * Replaces specified regions' data with a provided one.
+     * Creates region if it was not created yet.
+     *
+     * @param {Array} items - New regions' data.
+     * @param {String} name - Name of the region.
+     * @returns {MageUiCollection} Chainable.
+     */
+    updateRegion(items: Array<any>, name: string): MageUiCollection;
+
+    /**
+     * Destroys collection along with its' elements.
+     */
+    destroy(): void;
+
+    /**
+     * Tries to call specified method of a current component,
+     * otherwise delegates attempt to its' children.
+     *
+     * @param {String} target - Name of the method.
+     * @param {...*} parameters - Arguments that will be passed to method.
+     * @returns {*} Result of the method calls.
+     */
+    delegate(target: string): any;
+}
+
+interface MageUiCollectionDefaults extends MageUiElementDefaults {
+    template: string,
+    _elems: Array<any>,
+    ignoreTmpls: MageUiCollectionDefaultIgnoreTmpls
+}
+
+interface MageUiCollectionDefaultIgnoreTmpls extends MageUiClassDefaultsIgnoreTmpls {
+    childDefaults: boolean
+}
+
+declare var uiCollection: MageUiCollection;
+declare module 'uiCollection' {
+    export = uiCollection;
+}
+declare var uiComponent: MageUiCollection;
+declare module 'uiComponent' {
+    export = uiComponent;
 }
