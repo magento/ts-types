@@ -24,7 +24,7 @@ declare module 'mage/translate' {
  * Support for uiClass
  */
 interface MageUiClass {
-    defaults: MageUiClassDefaults;
+    defaults: any;
 
     /**
      * Create new instance of UI class
@@ -60,14 +60,6 @@ interface MageUiClass {
     extend(extender: MageUiClass): MageUiClass;
 }
 
-interface MageUiClassDefaults {
-    ignoreTmpls: MageUiClassDefaultsIgnoreTmpls
-}
-
-interface MageUiClassDefaultsIgnoreTmpls {
-    templates: boolean
-}
-
 declare var uiClass: MageUiClass;
 declare module 'uiClass' {
     export = uiClass;
@@ -77,8 +69,6 @@ declare module 'uiClass' {
  * Support for uiElement
  */
 interface MageUiElement extends MageUiClass, MageUiLinks, MageUiEvents {
-    defaults: MageUiElementDefaults;
-
     /**
      * Initializes observable properties.
      *
@@ -335,35 +325,6 @@ interface MageUiLinks {
     setLinks(links: object, direction: string): MageUiLinks;
 }
 
-interface MageUiElementDefaults extends MageUiClassDefaults {
-    _requesetd: object;
-    containers: Array<any>;
-    exports: object;
-    imports: object;
-    links: object;
-    listens: object;
-    name: string;
-    ns: string;
-    provider: string;
-    registerNodes: boolean;
-    source: null | string;
-    statefull: object;
-    template: string;
-    tracks: object;
-    storageConfig: {
-        provider: string;
-        namespace: string;
-        path: string;
-    };
-    maps: {
-        imports: object;
-        exports: object;
-    };
-    modules: {
-        storage: object;
-    };
-}
-
 declare var uiElement: MageUiElement;
 declare module 'uiElement' {
     export = uiElement;
@@ -409,8 +370,6 @@ declare module 'uiEvents' {
  * Support for uiCollection & uiComponent
  */
 interface MageUiCollection extends MageUiElement {
-    defaults: MageUiCollectionDefaults;
-
     /**
      * Called when another element was added to current component.
      *
@@ -520,16 +479,6 @@ interface MageUiCollection extends MageUiElement {
     delegate(target: string): any;
 }
 
-interface MageUiCollectionDefaults extends MageUiElementDefaults {
-    template: string,
-    _elems: Array<any>,
-    ignoreTmpls: MageUiCollectionDefaultIgnoreTmpls
-}
-
-interface MageUiCollectionDefaultIgnoreTmpls extends MageUiClassDefaultsIgnoreTmpls {
-    childDefaults: boolean
-}
-
 declare var uiCollection: MageUiCollection;
 declare module 'uiCollection' {
     export = uiCollection;
@@ -537,4 +486,147 @@ declare module 'uiCollection' {
 declare var uiComponent: MageUiCollection;
 declare module 'uiComponent' {
     export = uiComponent;
+}
+
+interface MageUiRegistry {
+    /**
+     * Retrieves item from registry which matches specified search criteria.
+     *
+     * @param {(Object|String|Function|Array)} query - Search condition (see examples).
+     * @param {Function} [callback] - Callback that will be invoked when
+     *      all of the requested items are available.
+     * @returns {*}
+     *
+     * @example Requesting item by it's name.
+     *      var obj = {index: 'test', sample: true};
+     *
+     *      registry.set('first', obj);
+     *      registry.get('first') === obj;
+     *      => true
+     *
+     * @example Requesting item with a specific properties.
+     *      registry.get('sample = 1, index = test') === obj;
+     *      => true
+     *      registry.get('sample = 0, index = foo') === obj;
+     *      => false
+     *
+     * @example Declaring search criteria as an object.
+     *      registry.get({sample: true}) === obj;
+     *      => true;
+     *
+     * @example Providing custom search handler.
+     *      registry.get(function (item) { return item.sample === true; }) === obj;
+     *      => true
+     *
+     * @example Sample asynchronous request declaration.
+     *      registry.get('index = test', function (item) {});
+     *
+     * @example Requesting multiple elements.
+     *      registry.set('second', {index: 'test2'});
+     *      registry.get(['first', 'second'], function (first, second) {});
+     */
+    get(query: object | string | Function | Array<any>, callback: Function): any;
+
+    /**
+     * Sets provided item to the registry.
+     *
+     * @param {String} id - Item's identifier.
+     * @param {*} item - Item's data.
+     * returns {Registry} Chainable.
+     */
+    set(id: string, item: any): MageUiRegistry;
+
+    /**
+     * Removes specified item from registry.
+     * Note that search query is not applicable.
+     *
+     * @param {String} id - Item's identifier.
+     * @returns {Registry} Chainable.
+     */
+    remove(id: string): MageUiRegistry;
+
+    /**
+     * Retrieves a collection of elements that match
+     * provided search criteria.
+     *
+     * @param {(Object|String|Function)} query - Search query.
+     *      See 'get' method for the syntax examples.
+     * @returns {Array} Found elements.
+     */
+    filter(query: object | string | Function): Array<any>;
+
+    /**
+     * Checks that at least one element in collection
+     * matches provided search criteria.
+     *
+     * @param {(Object|String|Function)} query - Search query.
+     *      See 'get' method for the syntax examples.
+     * @returns {Boolean}
+     */
+    has(query: object | string | Function): boolean;
+
+    /**
+     * Checks that registry contains a provided item.
+     *
+     * @param {*} item - Item to be checked.
+     * @returns {Boolean}
+     */
+    contains(item: any): boolean;
+
+    /**
+     * Extracts identifier of an item if it's present in registry.
+     *
+     * @param {*} item - Item whose identifier will be extracted.
+     * @returns {String|Undefined}
+     */
+    indexOf(item: any): string | undefined;
+
+    /**
+     * Same as a 'get' method except that it returns
+     * a promise object instead of invoking provided callback.
+     *
+     * @param {(String|Function|Object|Array)} query - Search query.
+     *      See 'get' method for the syntax examples.
+     * @returns {jQueryPromise}
+     */
+    promise(query: string | Function | object | Array<any>): Promise<any>;
+
+    /**
+     * Creates a wrapper function over the provided search query
+     * in order to provide somehow more convinient access to the
+     * registrie's items.
+     *
+     * @param {(String|Object|Function)} query - Search criteria.
+     *      See 'get' method for the syntax examples.
+     * @returns {Function}
+     *
+     * @example Comparison with a 'get' method on retrieving items.
+     *      var module = registry.async('name');
+     *
+     *      module();
+     *      => registry.get('name');
+     *
+     * @example Asynchronous request.
+     *      module(function (component) {});
+     *      => registry.get('name', function (component) {});
+     *
+     * @example Requesting item and invoking it's method with specified parameters.
+     *      module('trigger', true);
+     *      => registry.get('name', function (component) {
+         *          component.trigger(true);
+         *      });
+     */
+    async(query: string | object | Function): Function;
+
+    /**
+     * Creates new instance of a Registry.
+     *
+     * @returns {MageUiRegistry} New instance.
+     */
+    create(): MageUiRegistry;
+}
+
+declare var uiRegistry: MageUiRegistry;
+declare module 'uiRegistry' {
+    export = uiRegistry;
 }
