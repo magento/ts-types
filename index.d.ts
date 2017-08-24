@@ -28,9 +28,10 @@ interface MageUiClass {
 
     /**
      * Create new instance of UI class
+     *
      * @param args
      */
-    new(...args: Array<any>): MageUiClass;
+    new(...args: Array<any>): this;
 
     /**
      * Entry point to the initialization of consturctors' instance.
@@ -38,7 +39,7 @@ interface MageUiClass {
      * @param {Object} [options={}]
      * @returns {Class} Chainable.
      */
-    initialize(options: object): MageUiClass;
+    initialize(options: object): this;
 
     /**
      * Recursively extends data specified in constructors' 'defaults'
@@ -48,7 +49,7 @@ interface MageUiClass {
      * @param {Object} [options={}]
      * @returns {Class} Chainable.
      */
-    initConfig(options: object): MageUiClass;
+    initConfig(options: object): this;
 
     /**
      * Creates new constructor based on a current prototype properties,
@@ -57,7 +58,7 @@ interface MageUiClass {
      * @param {Object} [extender={}]
      * @returns {Function} New constructor.
      */
-    extend(extender: MageUiClass): MageUiClass;
+    extend(extender: MageUiClass): this;
 }
 
 declare var uiClass: MageUiClass;
@@ -69,12 +70,13 @@ declare module 'uiClass' {
  * Support for uiElement
  */
 interface MageUiElement extends MageUiClass, MageUiLinks, MageUiEvents {
+
     /**
      * Initializes observable properties.
      *
      * @returns {MageUiElement}
      */
-    initObservable(): MageUiElement;
+    initObservable(): this;
 
     /**
      * Parses 'modules' object and creates
@@ -82,7 +84,7 @@ interface MageUiElement extends MageUiClass, MageUiLinks, MageUiEvents {
      *
      * @returns {MageUiElement} Chainable.
      */
-    initModules(): MageUiElement;
+    initModules(): this;
 
     /**
      * Called when current element was injected to another component.
@@ -90,7 +92,7 @@ interface MageUiElement extends MageUiClass, MageUiLinks, MageUiEvents {
      * @param {Object} parent - Instance of a 'parent' component. @todo determine type of parents
      * @returns {MageUiElement} Chainable.
      */
-    initContainer(parent: object): MageUiElement;
+    initContainer(parent: object): this;
 
     /**
      * Initializes statefull properties
@@ -98,21 +100,21 @@ interface MageUiElement extends MageUiClass, MageUiLinks, MageUiEvents {
      *
      * @returns {MageUiElement} Chainable.
      */
-    initStatefull(): MageUiElement;
+    initStatefull(): this;
 
     /**
      * Initializes links between properties.
      *
      * @returns {MageUiElement} Chainbale.
      */
-    initLinks(): MageUiElement;
+    initLinks(): this;
 
     /**
      * Initializes listeners of the unique property.
      *
      * @returns {MageUiElement} Chainable.
      */
-    initUnique(): MageUiElement;
+    initUnique(): this;
 
     /**
      * Makes specified property to be stored automatically.
@@ -122,7 +124,7 @@ interface MageUiElement extends MageUiClass, MageUiLinks, MageUiEvents {
      * @param {String} [path=key] - Path to the property in storage.
      * @returns {MageUiElement} Chainable.
      */
-    setStatefull(key: string, path: string): MageUiElement;
+    setStatefull(key: string, path: string): this;
 
     /**
      * Updates property specified in uniqueNs
@@ -130,7 +132,7 @@ interface MageUiElement extends MageUiClass, MageUiLinks, MageUiEvents {
      *
      * @returns {MageUiElement} Chainable.
      */
-    setUnique(): MageUiElement;
+    setUnique(): this;
 
     /**
      * Creates 'async' wrapper for the specified component
@@ -172,7 +174,7 @@ interface MageUiElement extends MageUiClass, MageUiLinks, MageUiEvents {
      * @param {*} value - New value of the property.
      * @returns {MageUiElement} Chainable.
      */
-    set(path: string, value: string): MageUiElement;
+    set(path: string, value: string): this;
 
     /**
      * Removes nested property from the object.
@@ -180,7 +182,7 @@ interface MageUiElement extends MageUiClass, MageUiLinks, MageUiEvents {
      * @param {String} path - Path to the property.
      * @returns {MageUiElement} Chainable.
      */
-    remove(path: string): MageUiElement;
+    remove(path: string): this;
 
     /**
      * Creates observable properties for the current object.
@@ -210,7 +212,11 @@ interface MageUiElement extends MageUiClass, MageUiLinks, MageUiEvents {
          *          array: ['value']
          *      });
      */
-    observe(useAccessors: boolean, properties: object | string | Array<any>): MageUiElement;
+    observe(useAccessors: boolean | object | string | Array<any>, properties?: object | string | Array<any>): this;
+    /**
+     * This function can have the properties sent as the useAccessors parameter, unsure why these parameters were
+     * not just switched around
+     */
 
     /**
      * Delegates call to 'observe' method but
@@ -219,7 +225,7 @@ interface MageUiElement extends MageUiClass, MageUiLinks, MageUiEvents {
      * @param {(String|Array|Object)} properties - List of observable properties.
      * @returns {MageUiElement} Chainable.
      */
-    track(properties: string | Array<any> | object): MageUiElement;
+    track(properties: string | Array<any> | object): this;
 
     /**
      * Checks if specified property is tracked.
@@ -234,7 +240,7 @@ interface MageUiElement extends MageUiClass, MageUiLinks, MageUiEvents {
      *
      * @returns {MageUiElement} Chainable.
      */
-    restore(): MageUiElement;
+    restore(): this;
 
     /**
      * Stores value of the specified property in components' storage module.
@@ -243,7 +249,7 @@ interface MageUiElement extends MageUiClass, MageUiLinks, MageUiEvents {
      * @param {*} [data=this[property]]
      * @returns {MageUiElement} Chainable.
      */
-    store(property: string, data: any): MageUiElement;
+    store(property: string, data: any): this;
 
     /**
      * Extracts specified property from storage.
@@ -261,7 +267,7 @@ interface MageUiElement extends MageUiClass, MageUiLinks, MageUiEvents {
      * @param {String} property - Property to be removed from storage.
      * @returns {MageUiElement} Chainable.
      */
-    removeStored(property: string): MageUiElement;
+    removeStored(property: string): this;
 
     /**
      * Destroys current instance along with all of its' children.
@@ -287,7 +293,7 @@ interface MageUiElement extends MageUiClass, MageUiLinks, MageUiEvents {
      *
      * @returns {MageUiElement} Chainable.
      */
-    cleanData(): MageUiElement;
+    cleanData(): this;
 
     /**
      * Fallback data.
@@ -302,7 +308,7 @@ interface MageUiElement extends MageUiClass, MageUiLinks, MageUiEvents {
      * @param {String} path - path to value.
      * @returns {MageUiElement}
      */
-    updateConfig(oldValue: any, newValue: any, path: string): MageUiElement;
+    updateConfig(oldValue: any, newValue: any, path: string): this;
 }
 
 /**
@@ -314,7 +320,7 @@ interface MageUiLinks {
      *
      * @param listeners
      */
-    setListeners(listeners: object): MageUiLinks;
+    setListeners(listeners: object): this;
 
     /**
      * Set links with direction
@@ -322,7 +328,7 @@ interface MageUiLinks {
      * @param links
      * @param direction
      */
-    setLinks(links: object, direction: string): MageUiLinks;
+    setLinks(links: object, direction: string): this;
 }
 
 declare var uiElement: MageUiElement;
@@ -342,7 +348,7 @@ interface MageUiEvents {
      * @param {String} ns @todo investigate what this is
      * @return {MageUiEvents}
      */
-    on(events: string, callback: Function, ns: string): MageUiEvents;
+    on(events: string, callback: Function, ns: string): this;
 
     /**
      * Removed callback from listening to target event
@@ -350,7 +356,7 @@ interface MageUiEvents {
      * @param  {String} ns
      * @return {Object} reference to this
      */
-    off(ns: string): MageUiEvents;
+    off(ns: string): this;
 
     /**
      * Triggers event and executes all attached callbacks.
@@ -370,13 +376,14 @@ declare module 'uiEvents' {
  * Support for uiCollection & uiComponent
  */
 interface MageUiCollection extends MageUiElement {
+
     /**
      * Called when another element was added to current component.
      *
      * @param {Object} elem - Instance of an element that was added.
      * @returns {MageUiCollection} Chainable.
      */
-    initElement(elem: object): MageUiCollection;
+    initElement(elem: object): this;
 
     /**
      * Returns instance of a child found by provided index.
@@ -394,7 +401,7 @@ interface MageUiCollection extends MageUiElement {
      * @param {Number} [position=-1] - Position at which to insert elements.
      * @returns {MageUiCollection} Chainable.
      */
-    insertChild(elems: string | Array<any>, position: number): MageUiCollection;
+    insertChild(elems: string | Array<any>, position: number): this;
 
     /**
      * Removes specified child from collection.
@@ -404,7 +411,7 @@ interface MageUiCollection extends MageUiElement {
      *
      * @returns {MageUiCollection} Chainable.
      */
-    removeChild(elem: object, skipUpdate: boolean): MageUiCollection;
+    removeChild(elem: object, skipUpdate: boolean): this;
 
     /**
      * Destroys collection children with its' elements.
@@ -417,7 +424,7 @@ interface MageUiCollection extends MageUiElement {
      *
      * @returns {MageUiCollection} Chainable.
      */
-    clear(): MageUiCollection;
+    clear(): this;
 
     /**
      * Checks if specified child exists in collection.
@@ -461,7 +468,7 @@ interface MageUiCollection extends MageUiElement {
      * @param {String} name - Name of the region.
      * @returns {MageUiCollection} Chainable.
      */
-    updateRegion(items: Array<any>, name: string): MageUiCollection;
+    updateRegion(items: Array<any>, name: string): this;
 
     /**
      * Destroys collection along with its' elements.
@@ -534,7 +541,7 @@ interface MageUiRegistry {
      * @param {*} item - Item's data.
      * returns {Registry} Chainable.
      */
-    set(id: string, item: any): MageUiRegistry;
+    set(id: string, item: any): this;
 
     /**
      * Removes specified item from registry.
@@ -543,7 +550,7 @@ interface MageUiRegistry {
      * @param {String} id - Item's identifier.
      * @returns {Registry} Chainable.
      */
-    remove(id: string): MageUiRegistry;
+    remove(id: string): this;
 
     /**
      * Retrieves a collection of elements that match
