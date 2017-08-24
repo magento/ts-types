@@ -1,14 +1,15 @@
 # Magento 2 TypeScript Definitions
-This package contains type definitions for some Magento 2 libraries (https://magento.com/). If you're wanting to use TypeScript in a Magento 2 project you will won't be able to use Magento 2 libraries in your TypeScript without definitions for those libraries.
+This package contains type definitions for some Magento 2 libraries (https://magento.com/). If you're wanting to use TypeScript in a Magento 2 project you will won't be able to use Magento 2 libraries in your TypeScript without definitions for those libraries. This plugin is intended to be used alongside [DaveMacaulay/babel-plugin-magento2](https://github.com/DaveMacaulay/babel-plugin-magento2).
 
 ## Installation
 ```
-npm install https://github.com/DaveMacaulay/types-magento2.git
+yarn add --dev https://github.com/DaveMacaulay/types-magento2.git
 ```
 or
 ```
-yarn add https://github.com/DaveMacaulay/types-magento2.git
+npm install --save-dev https://github.com/DaveMacaulay/types-magento2.git
 ```
+
 
 ## Current Supported Magento Libraries
 - `mage/translate`: $t

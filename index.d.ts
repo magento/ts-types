@@ -24,8 +24,6 @@ declare module 'mage/translate' {
  * Support for uiClass
  */
 interface MageUiClass {
-    defaults: any;
-
     /**
      * Create new instance of UI class
      *
@@ -58,7 +56,7 @@ interface MageUiClass {
      * @param {Object} [extender={}]
      * @returns {Function} New constructor.
      */
-    extend(extender: MageUiClass): this;
+    extend(extender: object): this;
 }
 
 declare var uiClass: MageUiClass;
