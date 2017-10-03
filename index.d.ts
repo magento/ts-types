@@ -530,7 +530,7 @@ interface MageUiRegistry {
      *      registry.set('second', {index: 'test2'});
      *      registry.get(['first', 'second'], function (first, second) {});
      */
-    get(query: object | string | Function | Array<any>, callback: Function): any;
+    get(query: object | string | Function | Array<any>, callback?: Function): any;
 
     /**
      * Sets provided item to the registry.
