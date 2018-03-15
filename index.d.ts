@@ -343,10 +343,10 @@ interface MageUiEvents {
      *
      * @param {String}   events
      * @param {Function} callback
-     * @param {String} ns @todo investigate what this is
+     * @param {String} [ns] - namespace of events
      * @return {MageUiEvents}
      */
-    on(events: string, callback: Function, ns: string): this;
+    on(events: string, callback: Function, ns?: string): this;
 
     /**
      * Removed callback from listening to target event
@@ -360,9 +360,10 @@ interface MageUiEvents {
      * Triggers event and executes all attached callbacks.
      *
      * @param {String} name - Name of the event to be triggered.
+     * @param {Array} [additionaData] - Additional parametrs.
      * @returns {Boolean}
      */
-    trigger(name: string): boolean;
+    trigger(name: string, ...additionaData: any[]): boolean;
 }
 
 declare var uiEvents: MageUiEvents;
