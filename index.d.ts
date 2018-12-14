@@ -9,7 +9,7 @@
 interface MageTranslate {
     /**
      * Translate the string using the $t('text') format
-     * 
+     *
      * @example $t('Testing')
      */
     (text: string): string;
@@ -59,9 +59,8 @@ interface MageUiClass {
     extend(extender: object): this;
 }
 
-declare var uiClass: MageUiClass;
 declare module 'uiClass' {
-    export = uiClass;
+    export = MageUiClass;
 }
 
 /**
@@ -329,9 +328,8 @@ interface MageUiLinks {
     setLinks(links: object, direction: string): this;
 }
 
-declare var uiElement: MageUiElement;
 declare module 'uiElement' {
-    export = uiElement;
+    export = MageUiElement;
 }
 
 /**
@@ -366,9 +364,8 @@ interface MageUiEvents {
     trigger(name: string, ...additionaData: any[]): boolean;
 }
 
-declare var uiEvents: MageUiEvents;
 declare module 'uiEvents' {
-    export = uiEvents;
+    export = MageUiEvents;
 }
 
 /**
@@ -485,13 +482,11 @@ interface MageUiCollection extends MageUiElement {
     delegate(target: string): any;
 }
 
-declare var uiCollection: MageUiCollection;
 declare module 'uiCollection' {
-    export = uiCollection;
+    export = MageUiCollection;
 }
-declare var uiComponent: MageUiCollection;
 declare module 'uiComponent' {
-    export = uiComponent;
+    export = MageUiCollection;
 }
 
 interface MageUiRegistry {
@@ -632,9 +627,8 @@ interface MageUiRegistry {
     create(): MageUiRegistry;
 }
 
-declare var uiRegistry: MageUiRegistry;
 declare module 'uiRegistry' {
-    export = uiRegistry;
+    export = MageUiRegistry;
 }
 
 interface LogEntry {
@@ -645,55 +639,55 @@ interface LogEntry {
     message: string;
 }
 
-interface Logger {
+declare module 'consoleLogger' {
     /**
      * Swaps current display level with the provided one.
      *
      * @param {Number} level - Level's code.
      */
-    setDisplayLevel(level: number): void;
+    export function setDisplayLevel(level: number): void;
 
     /**
      * Sets up the criteria by which log entries will be filtered out from the output.
      *
      * @param {String} criteria
      */
-    addDisplayCriteria(criteria: string): void;
+    export function addDisplayCriteria(criteria: string): void;
 
     /**
      * Removes previously defined criteria.
      *
      * @param {String} criteria
      */
-    removeDisplayCriteria(criteria: string): void;
+    export function removeDisplayCriteria(criteria: string): void;
 
     /**
      * @param {String} message
      * @param {Object} [messageData]
      * @returns {LogEntry}
      */
-    error(message: any, messageData?: {[key: string]: any}): LogEntry;
+    export function error(message: any, messageData?: {[key: string]: any}): LogEntry;
 
     /**
      * @param {String} message
      * @param {Object} [messageData]
      * @returns {LogEntry}
      */
-    warn(message: any, messageData?: {[key: string]: any}): LogEntry;
+    export function warn(message: any, messageData?: {[key: string]: any}): LogEntry;
 
     /**
      * @param {String} message
      * @param {Object} [messageData]
      * @returns {LogEntry}
      */
-    info(message: any, messageData?: {[key: string]: any}): LogEntry;
+    export function info(message: any, messageData?: {[key: string]: any}): LogEntry;
 
     /**
      * @param {String} message
      * @param {Object} [messageData]
      * @returns {LogEntry}
      */
-    debug(message: any, messageData?: {[key: string]: any}): LogEntry;
+    export function debug(message: any, messageData?: {[key: string]: any}): LogEntry;
 
     /**
      * Returns an array of log entries that have been added to the logger.
@@ -701,19 +695,10 @@ interface Logger {
      * @param {String} [criteria] - Optional filter criteria.
      * @returns {Array<LogEntry>}
      */
-    getEntries(criteria?: string): Array<LogEntry>;
+    export function getEntries(criteria?: string): Array<LogEntry>;
 
     /**
      * @param {String} [criteria]
      */
-    dump(criteria?: string): void;
-}
-
-interface ConsoleLogger extends Logger {
-    // Console logger does not implement any new public methods
-}
-
-declare var consoleLogger: ConsoleLogger;
-declare module 'consoleLogger' {
-    export = consoleLogger;
+    export function dump(criteria?: string): void;
 }
