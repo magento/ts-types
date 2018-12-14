@@ -636,3 +636,84 @@ declare var uiRegistry: MageUiRegistry;
 declare module 'uiRegistry' {
     export = uiRegistry;
 }
+
+interface LogEntry {
+    timestamp: Date;
+    level: number;
+    levelName: string;
+    data: {[key: string]: any};
+    message: string;
+}
+
+interface Logger {
+    /**
+     * Swaps current display level with the provided one.
+     *
+     * @param {Number} level - Level's code.
+     */
+    setDisplayLevel(level: number): void;
+
+    /**
+     * Sets up the criteria by which log entries will be filtered out from the output.
+     *
+     * @param {String} criteria
+     */
+    addDisplayCriteria(criteria: string): void;
+
+    /**
+     * Removes previously defined criteria.
+     *
+     * @param {String} criteria
+     */
+    removeDisplayCriteria(criteria: string): void;
+
+    /**
+     * @param {String} message
+     * @param {Object} [messageData]
+     * @returns {LogEntry}
+     */
+    error(message: any, messageData?: {[key: string]: any}): LogEntry;
+
+    /**
+     * @param {String} message
+     * @param {Object} [messageData]
+     * @returns {LogEntry}
+     */
+    warn(message: any, messageData?: {[key: string]: any}): LogEntry;
+
+    /**
+     * @param {String} message
+     * @param {Object} [messageData]
+     * @returns {LogEntry}
+     */
+    info(message: any, messageData?: {[key: string]: any}): LogEntry;
+
+    /**
+     * @param {String} message
+     * @param {Object} [messageData]
+     * @returns {LogEntry}
+     */
+    debug(message: any, messageData?: {[key: string]: any}): LogEntry;
+
+    /**
+     * Returns an array of log entries that have been added to the logger.
+     *
+     * @param {String} [criteria] - Optional filter criteria.
+     * @returns {Array<LogEntry>}
+     */
+    getEntries(criteria?: string): Array<LogEntry>;
+
+    /**
+     * @param {String} [criteria]
+     */
+    dump(criteria?: string): void;
+}
+
+interface ConsoleLogger extends Logger {
+    // Console logger does not implement any new public methods
+}
+
+declare var consoleLogger: ConsoleLogger;
+declare module 'consoleLogger' {
+    export = consoleLogger;
+}
