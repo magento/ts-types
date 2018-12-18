@@ -59,8 +59,9 @@ interface MageUiClass {
     extend(extender: object): this;
 }
 
+declare var uiClass: MageUiClass;
 declare module 'uiClass' {
-    export = MageUiClass;
+    export = uiClass;
 }
 
 /**
@@ -328,8 +329,9 @@ interface MageUiLinks {
     setLinks(links: object, direction: string): this;
 }
 
+declare var uiElement: MageUiElement;
 declare module 'uiElement' {
-    export = MageUiElement;
+    export = uiElement;
 }
 
 /**
@@ -364,8 +366,9 @@ interface MageUiEvents {
     trigger(name: string, ...additionaData: any[]): boolean;
 }
 
+declare var uiEvents: MageUiEvents;
 declare module 'uiEvents' {
-    export = MageUiEvents;
+    export = uiEvents;
 }
 
 /**
@@ -482,11 +485,13 @@ interface MageUiCollection extends MageUiElement {
     delegate(target: string): any;
 }
 
+declare var uiCollection: MageUiCollection;
 declare module 'uiCollection' {
-    export = MageUiCollection;
+    export = uiCollection;
 }
+declare var uiComponent: MageUiCollection;
 declare module 'uiComponent' {
-    export = MageUiCollection;
+    export = uiComponent;
 }
 
 interface MageUiRegistry {
@@ -627,8 +632,9 @@ interface MageUiRegistry {
     create(): MageUiRegistry;
 }
 
+declare var uiRegistry: MageUiRegistry;
 declare module 'uiRegistry' {
-    export = MageUiRegistry;
+    export = uiRegistry;
 }
 
 interface LogEntry {
