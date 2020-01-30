@@ -7,7 +7,11 @@
     "type": "git",
     "url": "git+ssh://git@github.com/magento/ts-types.git"
   },
-  "keywords": ["magento", "magento2", "typescript"],
+  "keywords": [
+    "magento",
+    "magento2",
+    "typescript"
+  ],
   "author": "Magento Commerce",
   "license": "OSL-3.0",
   "bugs": {
