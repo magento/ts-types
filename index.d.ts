@@ -1,7 +1,7 @@
-// Type definitions for Magento 2
-// Project: https://magento2.com/
-// Definitions by: Dave Macaulay <https://github.com/DaveMacaulay/>
-// Definitions: https://github.com/DaveMacaulay/types-magento2
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 
 /**
  * Support for mage/translate $t syntax
