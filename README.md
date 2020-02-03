@@ -3,11 +3,11 @@ This package contains type definitions for some Magento 2 libraries (https://mag
 
 ## Installation
 ```
-yarn add --dev https://github.com/DaveMacaulay/types-magento2.git
+yarn add --dev https://github.com/magento/ts-types.git
 ```
 or
 ```
-npm install --save-dev https://github.com/DaveMacaulay/types-magento2.git
+npm install --save-dev https://github.com/magento/ts-types.git
 ```
 
 
@@ -19,10 +19,10 @@ npm install --save-dev https://github.com/DaveMacaulay/types-magento2.git
 - `uiComponent`: uiComponent
 - `uiRegistry`: uiRegistry
 
-> If a library you desire isn't included yet please open an issue. Alternatively I welcome pull requests to this repository.
+> If a library you desire isn't included yet please open an issue or pull request to this repository.
 
 ## Usage
-You can import the moduels using the standard TypeScript `import` syntax:
+You can import the modules using the standard TypeScript `import` syntax:
 ```js
 import * as $t from 'mage/translate';
 import * as uiClass from 'uiClass';

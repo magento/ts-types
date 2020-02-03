@@ -1,20 +1,21 @@
 {
   "name": "@types/magento2",
-  "version": "1.0.3",
   "description": "TypeScript definitions for Magento 2",
-  "license": "MIT",
+  "version": "1.0.4",
+  "main": "index.d.ts",
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/DaveMacaulay/types-magento2.git"
+    "url": "git+ssh://git@github.com/magento/ts-types.git"
   },
-  "contributors": [
-    {
-        "name": "Dave Macaulay",
-        "url": "https://github.com/DaveMacaulay/"
-    }
+  "keywords": [
+    "magento",
+    "magento2",
+    "typescript"
   ],
+  "author": "Magento Commerce",
+  "license": "OSL-3.0",
   "bugs": {
-    "url": "https://github.com/DaveMacaulay/types-magento2/issues"
+    "url": "https://github.com/magento/ts-types/issues"
   },
   "homepage": "https://github.com/DaveMacaulay/types-magento2#readme"
 }
